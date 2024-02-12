@@ -1,0 +1,105 @@
+{{!-- This container will render the userName of whoever logs into their profile for Haze --}}
+
+<div class="bgdrop">
+  <div class="container tbox">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-5 text-center text-light">
+        <h2>Hello, {{user_name}}</h2>
+
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center align-items-center text-light">
+      <div class="col-5 text-center">
+        <em>Welcome to the Haze community</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="container  mt-4 d-flex justify-content-between">
+    {{!-- The card container for each of the users post --}}
+    <div class="d-flex flex-column flex-md-fill">
+      {{#each posts}}
+      <div class="userPost">
+        <a class="text-decoration-none" href="/games/{{id}}">
+          <div class="card mb-3 mt-4" id="posts" style="background-color:#1c1726;">
+            <div class="card-body text-light">
+              <h5 class="card-header text-center">{{subject}}</h5>
+              <p class="card-text">{{description}}</p>
+              <p class="card-footer text-end"><small class="text-light">{{format_date date_created}}</small>
+              </p>
+              <button data-id="{{id}}" class="btn delete-post-btn bg-transparent text-light">🗑️</button>
+            </div>
+          </div>
+        </a>
+      </div>
+      {{/each}}
+    </div>
+    <div class="card d-flex text-light" id="aside" style="width: 18rem;">
+      {{#if profilePic}}
+      <img class="card-img-top" src="data:image/png;base64,{{profilePic}}" alt="profile">
+      {{else}}
+      <img class="card-img-top" src="https://via.placeholder.com/150" alt="default-profile-pic">
+      {{/if}}
+      <div class="card-body">
+        <h5 class="card-title">{{user_name}}</h5>
+        <p class="card-text">{{bio}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" id="lists">Console of Choice: {{console}} </li>
+        <li class="list-group-item" id="lists">Favorite Game: {{favorite}} </li>
+        <li class="list-group-item" id="lists">Currently Playing: {{current}} </li>
+      </ul>
+      <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+          Edit Profile
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="" id="">Edit Profile</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="profile-form">
+          <input type="hidden" value="{{id}}" id="user-id">
+          <div id="form-upper">
+            <div enctype="multipart/form-data">
+              <label for="img-up">Upload image here:</label>
+              <input type="file" id="profile-pic" class="form-control" name="filename" accept="image/*">
+            </div>
+          </div>
+          <div id="form-lower" class="form">
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" rows="5" cols="60" class="form-control"></textarea>
+          </div>
+          <br>
+          <div id="form-lower" class="form">
+            <label for="console">Console of Choice:</label>
+            <input type="text" id="console" name="console" class="form-control">
+            <div>
+              <label for="favorite">Favorite Game:</label>
+              <input type="text" id="favorite" name="favorite" class="form-control">
+            </div>
+            <div>
+              <label for="current">Currently Playing:</label>
+              <input type="text" id="current" name="current" class="form-control">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-secondary">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script src="/js/profile.js"></script>

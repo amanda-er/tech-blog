@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS condensation_db;
+CREATE DATABASE IF NOT EXISTS condensation_db;
